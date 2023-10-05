@@ -20,4 +20,17 @@ router.get('/talker', async (_req, res) => {
   }
 });
 
+router.get('/talker/:id', async (req, res) => {
+  try {
+    const paramsURL = req.params;
+    const id = Number(paramsURL.id);
+    const talkers = await readFileTalker();
+    const talker = talkers.find((t) => t.id === id);
+    if (!talker) throw Error;
+    res.status(200).send(talker);
+  } catch (err) {
+    res.status(404).send({ message: 'Pessoa palestrante não encontrada' });
+  }
+});
+
 module.exports = router;
