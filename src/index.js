@@ -1,5 +1,6 @@
 const express = require('express');
-const router = require('./routes/talker');
+const routerTalker = require('./routes/talker');
+const routerLogin = require('./routes/login');
 
 const app = express();
 app.use(express.json());
@@ -16,4 +17,6 @@ app.listen(PORT, () => {
   console.log('Online');
 });
 
-app.use(router);
+app.use(routerTalker);
+
+app.use(routerLogin);
