@@ -15,6 +15,19 @@ routerTalker.get('/talker', async (_req, res) => {
   }
 });
 
+routerTalker.get('/talker/search', validateToken, async (req, res) => {
+  try {
+    const { q } = req.query;
+    const talkers = await readFileTalker();
+    if (!q) return res.status(200).send(talkers);
+    const talkersFilter = talkers.filter((t) => t.name.includes(q));
+    if (talkersFilter.length === 0) return res.status(200).send([]);
+    res.status(200).send(talkersFilter);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
 routerTalker.get('/talker/:id', async (req, res) => {
   try {
     const paramsURL = req.params;
