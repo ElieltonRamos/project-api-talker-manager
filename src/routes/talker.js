@@ -60,4 +60,17 @@ routerTalker.put('/talker/:id', validateToken, validadeName, validateAge,
     }
   });
 
+routerTalker.delete('/talker/:id', validateToken, async (req, res) => {
+  try {
+    const talkers = await readFileTalker();
+    const paramsURL = req.params;
+    const id = Number(paramsURL.id);
+    const newTalkers = talkers.filter((t) => t.id !== id);
+    await writeFileTalker(newTalkers);
+    res.status(204).send();
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
 module.exports = routerTalker;
