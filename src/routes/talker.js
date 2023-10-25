@@ -6,6 +6,8 @@ const { readFileTalker, writeFileTalker } = require('../utils/readAndWrite');
 const { searchTalker } = require('../utils/searchTalker');
 const { validateToken, validadeName, validateAge,
   validateTalk, verifyRate } = require('../middlewares/validations');
+const { searchDateTalker, seachDateRateName,
+  searchDateName, searchDateRate, searchDateEmpty } = require('../middlewares/searchDate');
 
 const routerTalker = express.Router();
 
@@ -19,11 +21,12 @@ routerTalker.get('/talker', async (_req, res) => {
   }
 });
 
-routerTalker.get('/talker/search', validateToken, async (req, res) => {
-  const { q, rate } = req.query;
-  const { status, data } = await searchTalker(q, rate);
-  res.status(status).send(data);
-});
+routerTalker.get('/talker/search', validateToken, searchDateEmpty, searchDateTalker,
+  searchDateRate, searchDateName, seachDateRateName, async (req, res) => {
+    const { q, rate } = req.query;
+    const { status, data } = await searchTalker(q, rate);
+    res.status(status).send(data);
+  });
 
 routerTalker.get('/talker/:id', async (req, res) => {
   try {
