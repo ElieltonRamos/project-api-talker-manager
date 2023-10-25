@@ -1,5 +1,9 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable max-lines-per-function */
+/* eslint-disable complexity */
 const express = require('express');
-const { readFileTalker, writeFileTalker } = require('../middlewares/readAndWrite');
+const { readFileTalker, writeFileTalker } = require('../utils/readAndWrite');
+const { searchTalker } = require('../utils/searchTalker');
 const { validateToken, validadeName, validateAge,
   validateTalk, verifyRate } = require('../middlewares/validations');
 
@@ -16,16 +20,9 @@ routerTalker.get('/talker', async (_req, res) => {
 });
 
 routerTalker.get('/talker/search', validateToken, async (req, res) => {
-  try {
-    const { q } = req.query;
-    const talkers = await readFileTalker();
-    if (!q) return res.status(200).send(talkers);
-    const talkersFilter = talkers.filter((t) => t.name.includes(q));
-    if (talkersFilter.length === 0) return res.status(200).send([]);
-    res.status(200).send(talkersFilter);
-  } catch (err) {
-    res.status(500).send({ message: err.message });
-  }
+  const { q, rate } = req.query;
+  const { status, data } = await searchTalker(q, rate);
+  res.status(status).send(data);
 });
 
 routerTalker.get('/talker/:id', async (req, res) => {
