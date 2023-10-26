@@ -1,6 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable max-lines-per-function */
-/* eslint-disable complexity */
 const express = require('express');
 const { readFileTalker, writeFileTalker } = require('../utils/readAndWrite');
 const { searchTalker } = require('../utils/searchTalker');
@@ -8,8 +5,18 @@ const { validateToken, validadeName, validateAge,
   validateTalk, verifyRate } = require('../middlewares/validations');
 const { searchDateTalker, seachDateRateName,
   searchDateName, searchDateRate, searchDateEmpty } = require('../middlewares/searchDate');
+const { patchTalkerRate } = require('../utils/patchTalkerRate');
 
 const routerTalker = express.Router();
+
+routerTalker.patch('/talker/rate/:id', validateToken, async (req, res) => {
+  const { id } = req.params;
+  const { rate } = req.body;
+  const rateNumber = Number(rate);
+  const idNumber = Number(id);
+  const { status, data } = await patchTalkerRate(idNumber, rateNumber);
+  res.status(status).send(data);
+});
 
 routerTalker.get('/talker', async (_req, res) => {
   try {
