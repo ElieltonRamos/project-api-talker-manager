@@ -6,8 +6,14 @@ const { validateToken, validadeName, validateAge,
 const { searchDateTalker, seachDateRateName,
   searchDateName, searchDateRate, searchDateEmpty } = require('../middlewares/searchDate');
 const { patchTalkerRate } = require('../utils/patchTalkerRate');
+const { searchDatabase } = require('../models/searchDatabase');
 
 const routerTalker = express.Router();
+
+routerTalker.get('/talker/db', async (req, res) => {
+  const { status, data } = await searchDatabase();
+  res.status(status).send(data);
+});
 
 routerTalker.patch('/talker/rate/:id', validateToken, async (req, res) => {
   const { id } = req.params;
