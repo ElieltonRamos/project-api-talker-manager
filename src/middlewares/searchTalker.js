@@ -1,4 +1,4 @@
-const { readFileTalker } = require('./readAndWrite');
+const { readFileTalker } = require('../models/readAndWrite');
 
 const searchTalkerName = (q, rate, talkers) => {
   const talkersFilterName = talkers.filter((t) => t.name.includes(q));

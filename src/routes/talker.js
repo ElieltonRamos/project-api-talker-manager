@@ -1,6 +1,6 @@
 const express = require('express');
-const { readFileTalker, writeFileTalker } = require('../utils/readAndWrite');
-const { searchTalker } = require('../utils/searchTalker');
+const { readFileTalker, writeFileTalker } = require('../models/readAndWrite');
+const { searchTalker } = require('../middlewares/searchTalker');
 const { validateToken, validadeName, validateAge,
   validateTalk, verifyRate } = require('../middlewares/validations');
 
@@ -8,7 +8,7 @@ const { searchDateTalker, seachDateRateName,
   searchDateName, searchDateRate, searchDateEmpty,
   isValidDate } = require('../middlewares/searchDate');
 
-const { patchTalkerRate } = require('../utils/patchTalkerRate');
+const { patchTalkerRate } = require('../middlewares/patchTalkerRate');
 const { searchDatabase } = require('../models/searchDatabase');
 
 const routerTalker = express.Router();

@@ -1,4 +1,4 @@
-const { readFileTalker, writeFileTalker } = require('./readAndWrite');
+const { readFileTalker, writeFileTalker } = require('../models/readAndWrite');
 
 const validationRate = (rate) => {
   console.log(rate);

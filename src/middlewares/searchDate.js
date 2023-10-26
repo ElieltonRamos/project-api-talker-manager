@@ -1,4 +1,4 @@
-const { readFileTalker } = require('../utils/readAndWrite');
+const { readFileTalker } = require('../models/readAndWrite');
 
 const searchDateEmpty = async (req, res, next) => {
   const { q, rate, date } = req.query;
