@@ -3,8 +3,11 @@ const { readFileTalker, writeFileTalker } = require('../utils/readAndWrite');
 const { searchTalker } = require('../utils/searchTalker');
 const { validateToken, validadeName, validateAge,
   validateTalk, verifyRate } = require('../middlewares/validations');
+
 const { searchDateTalker, seachDateRateName,
-  searchDateName, searchDateRate, searchDateEmpty } = require('../middlewares/searchDate');
+  searchDateName, searchDateRate, searchDateEmpty,
+  isValidDate } = require('../middlewares/searchDate');
+
 const { patchTalkerRate } = require('../utils/patchTalkerRate');
 const { searchDatabase } = require('../models/searchDatabase');
 
@@ -34,7 +37,7 @@ routerTalker.get('/talker', async (_req, res) => {
   }
 });
 
-routerTalker.get('/talker/search', validateToken, searchDateEmpty, searchDateTalker,
+routerTalker.get('/talker/search', validateToken, searchDateEmpty, isValidDate, searchDateTalker,
   searchDateRate, searchDateName, seachDateRateName, async (req, res) => {
     const { q, rate } = req.query;
     const { status, data } = await searchTalker(q, rate);

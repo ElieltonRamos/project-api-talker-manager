@@ -10,17 +10,22 @@ const searchDateEmpty = async (req, res, next) => {
   next();
 };
 
-const searchDateTalker = async (req, res, next) => {
-  const { q, rate, date } = req.query;
-  const talkers = await readFileTalker();
-  const filterTalkers = talkers.filter((talker) => talker.talk.watchedAt === date);
+const isValidDate = async (req, res, next) => {
+  const { date } = req.query;
   const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
 
-  if (!dateRegex.test(date)) {
+  if (date !== undefined && !dateRegex.test(date)) {
     return res.status(400).json({
       message: 'O parâmetro "date" deve ter o formato "dd/mm/aaaa"',
     });
   }
+  next();
+};
+
+const searchDateTalker = async (req, res, next) => {
+  const { q, rate, date } = req.query;
+  const talkers = await readFileTalker();
+  const filterTalkers = talkers.filter((talker) => talker.talk.watchedAt === date);
 
   if (!q && !rate && date) {
     return res.status(200).json(filterTalkers);
@@ -74,4 +79,5 @@ module.exports = {
   searchDateName,
   seachDateRateName,
   searchDateEmpty,
+  isValidDate,
 };
