@@ -1,7 +1,6 @@
 const { readFileTalker, writeFileTalker } = require('../models/readAndWrite');
 
 const validationRate = (rate) => {
-  console.log(rate);
   const ratesValids = [1, 2, 3, 4, 5];
 
   if (rate === undefined || Number.isNaN(rate)) {
