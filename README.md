@@ -77,6 +77,28 @@ docker exec -it talker_manager bash
 npm start
    ```
 
+## Testes
+
+O projeto conta com testes que verificam o funcionamento de cada rota da API, os testes foram escritos com JEST, lembrando que e necessario que o docker compose tenha sido executado para que os containers da apricação estejam online para que os testes funcionem.
+
+Para executar os testes siga os seguintes passos:
+
+Abra o terminal na raiz do projeto
+
+Execute o comando:
+
+   ``` bash
+docker exec -it talker_manager bash
+   ```
+
+Agora, dentro do container do node, execute:
+
+   ``` bash
+npm test
+   ```
+
+Verifique a saida dos testes no seu terminal
+
 ## Uso
 
 Explore as rotas essenciais desta API, incluindo autenticação, operações de CRUD e funcionalidades de pesquisa para uma administração eficaz dos palestrantes.
@@ -125,6 +147,7 @@ A seguir esta explicada a estrutura de pastas do projeto
 
 project-api-talker-manager/ : A pasta raiz do projeto.<br>
 ├── node_modules/ : Contém as dependências da aplicação.<br>
+├── tests/ : Contém os testes do projeto.<br>
 ├── src/ : O diretório principal do código-fonte da aplicação, onde estão localizados os middlewares, modelos de dados e definições das rotas da API.<br>
 │   ├── middlewares/<br>
 │   ├── models/<br>
